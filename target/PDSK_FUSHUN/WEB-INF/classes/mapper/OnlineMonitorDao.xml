@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pdsk.dao.OnlineMonitorDao">
+
+    <select id="findTime" resultType="Time">
+        select * from  gpstime
+    </select>
+
+    <select id="findStationTobrows" resultType="StationTobrows">
+        select * from changedata ch, data d, data_original doc where ch.RecordTime between #{time} and #{time1} and ch.RecordTime=d.timeperiod
+        AND d.strMonitorName=doc.`name` AND ch.changedataid=d.dataid AND d.strBaseStationName=#{name}
+    </select>
+
+</mapper>

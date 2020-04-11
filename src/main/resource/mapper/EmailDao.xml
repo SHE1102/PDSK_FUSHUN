@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pdsk.dao.EmailDao">
+    <select id="findEmail"  resultType="Email">
+        select * from mail
+    </select>
+    <update id="updateEmail" parameterType="Email">
+        update mail set subjectemail=#{subjectemail},mailcontent=#{mailcontent},addresser=#{addresser},password=#{password},
+        smtp=#{smtp},port=#{port},state=#{state},threshold=#{threshold} where id = #{id}
+    </update>
+
+    <insert id="insertEmail" parameterType="Email">
+        insert into mail(subjectemail,mailcontent,addresser,password,smtp,port,state,threshold)
+        values(#{subjectemail},#{mailcontent},#{addresser},#{password},#{smtp},#{port},#{state},#{threshold})
+    </insert>
+
+</mapper>

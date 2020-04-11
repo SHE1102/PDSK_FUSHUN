@@ -1,0 +1,63 @@
+/* body {margin:0; padding:0; font:16px/1 arial,"Microsoft yahei";background-color: #eaeaea;} */
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,blockquote,p{padding:0; margin:0;}
+ol,ul {list-style:none;}
+li{list-style-type:none;}
+img{vertical-align:top;border:0;}
+h1,h2,h3,h4,h5,h6{font-size:inherit; font-weight:normal;}
+address,cite,code,em,th,i{font-weight:normal; font-style:normal;}
+.clearfix{*zoom:1;}
+.clearfix:after{display:block; overflow:hidden; clear:both; height:0; visibility:hidden; content:"";}
+a:link,a:visited
+{
+	color:#000;
+	text-decoration: none;
+}
+input
+{
+	outline: 0;
+} 
+.swiper_wrap{
+	position: relative;
+	width: 695px;
+	height: 30px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+/* 改动 */
+.font_inner{
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 695px;
+	float: right;
+  	color: #444;
+ 	font-size: 14px;
+ 	margin-top: 1px;
+}
+.font_inner li{
+	line-height: 30px;
+	/* padding-left: 200px;   */
+	margin: 0px 1px -1px -465px;
+}
+.lt{
+	position: absolute;
+	left: -1px;
+	top: 7px;
+	font-family: "宋体";
+	font-weight: bold;
+	color: #AAAAAA;
+}
+.gt{
+	position: absolute;
+	right: 26px;
+	top: 7px;
+	font-family: "宋体";
+	font-weight: bold;
+	color: #AAAAAA;
+}
+.swiper_wrap .font_inner a{
+	color: #444;
+}
+.swiper_wrap li:hover{
+	color: #307ECC;
+}

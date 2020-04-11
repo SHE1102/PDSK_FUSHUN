@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pdsk.dao.ContentEditorDao">
+    <select id="getRecordCount"  resultType="Integer">
+        select count(*) from project_txt
+    </select>
+    <select id="findTxtRecord" resultType="Txt">
+        select * from project_txt
+    </select>
+    <insert id="insertTxt">
+        insert into project_txt(id,txt) values(null,#{txt})
+    </insert>
+    <insert id="insertInstructions">
+        insert into project_txt(id,instructions) values(null,#{instructions})
+    </insert>
+    <update id="updateTxtById">
+        update project_txt set txt=#{txt} where id=#{id}
+    </update>
+    <update id="updateInstructionsById">
+        update project_txt set instructions=#{instructions} where id=#{id}
+    </update>
+
+</mapper>

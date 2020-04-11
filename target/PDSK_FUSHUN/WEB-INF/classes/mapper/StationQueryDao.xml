@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pdsk.dao.StationQueryDao">
+
+    <select id="findSingleMonitorStationsCount" parameterType="StationQueryInfo" resultType="Integer">
+        select COUNT(*) from changedata ch, data_original doc
+        where ch.RecordTime between #{timeStart} and #{timeEnd} and doc.`name`=#{baseStationName} and ch.PairName=#{pairName}
+        <if test="model == 2">
+            <foreach collection="conditionList" item="condition" open="and (" close=" " separator="and" >
+                <if test="condition == 1">
+                    ch.SKxSingleChange > #{thresholdUse}
+                </if>
+                <if test="condition == 2">
+                    ch.SKySingleChange > #{thresholdUse}
+                </if>
+                <if test="condition == 3">
+                    ch.SDhSingleChange > #{thresholdUse}
+                </if>
+            </foreach>
+            <foreach collection="conditionList" item="condition" open="or" close=")" separator="and" >
+                <if test="condition == 1">
+                    ch.SKxSingleChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+                <if test="condition == 2">
+                    ch.SKySingleChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+                <if test="condition == 3">
+                    ch.SDhSingleChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+            </foreach>
+        </if>
+        <if test="model == 3">
+            <foreach collection="conditionList" item="condition" open="and (" close=" " separator="and" >
+                <if test="condition == 1">
+                    ch.SKxAccChange > #{thresholdUse}
+                </if>
+                <if test="condition == 2">
+                    ch.SKyAccChange > #{thresholdUse}
+                </if>
+                <if test="condition == 3">
+                    ch.SDhAccChange > #{thresholdUse}
+                </if>
+            </foreach>
+            <foreach collection="conditionList" item="condition" open="or" close=")" separator="and" >
+                <if test="condition == 1">
+                    ch.SKxAccChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+                <if test="condition == 2">
+                    ch.SKyAccChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+                <if test="condition == 3">
+                    ch.SDhAccChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+            </foreach>
+        </if>
+    </select>
+
+    <resultMap id="station" type="StationTobrows">
+        <result property="name" column="PairName"/>
+        <result property="original_Scx" column="Original_SKx_inicial"/>
+        <result property="original_ScY" column="Original_SKy_inicial"/>
+        <result property="original_Scz" column="Original_SDh_inicial"/>
+        <result property="sDhAccChange" column="SDhAccChange"/>
+        <result property="SKyAccChange" column="SKyAccChange"/>
+        <result property="sKxAccChange" column="SKxAccChange"/>
+        <result property="sDhSingleChange" column="SDhSingleChange"/>
+        <result property="sKxSingleChange" column="SKxSingleChange"/>
+        <result property="sKySingleChange" column="SKySingleChange"/>
+        <result property="sDx" column="SKx"/>
+        <result property="sDy" column="SKy"/>
+        <result property="sDh" column="SKh"/>
+    </resultMap>
+    <select id="findSingleMonitorStations" parameterType="StationQueryInfo" resultMap="station">
+        select * from changedata ch, data_original doc
+        where ch.RecordTime between #{timeStart} and #{timeEnd} and doc.`name`=#{baseStationName} and ch.PairName=#{pairName}
+        <if test="model == 2">
+            <foreach collection="conditionList" item="condition" open="and (" close=" " separator="and" >
+                <if test="condition == 1">
+                    ch.SKxSingleChange > #{thresholdUse}
+                </if>
+                <if test="condition == 2">
+                    ch.SKySingleChange > #{thresholdUse}
+                </if>
+                <if test="condition == 3">
+                    ch.SDhSingleChange > #{thresholdUse}
+                </if>
+            </foreach>
+            <foreach collection="conditionList" item="condition" open="or" close=")" separator="and" >
+                <if test="condition == 1">
+                    ch.SKxSingleChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+                <if test="condition == 2">
+                    ch.SKySingleChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+                <if test="condition == 3">
+                    ch.SDhSingleChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+            </foreach>
+        </if>
+        <if test="model == 3">
+            <foreach collection="conditionList" item="condition" open="and (" close=" " separator="and" >
+                <if test="condition == 1">
+                    ch.SKxAccChange > #{thresholdUse}
+                </if>
+                <if test="condition == 2">
+                    ch.SKyAccChange > #{thresholdUse}
+                </if>
+                <if test="condition == 3">
+                    ch.SDhAccChange > #{thresholdUse}
+                </if>
+            </foreach>
+            <foreach collection="conditionList" item="condition" open="or" close=")" separator="and" >
+                <if test="condition == 1">
+                    ch.SKxAccChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+                <if test="condition == 2">
+                    ch.SKyAccChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+                <if test="condition == 3">
+                    ch.SDhAccChange &lt; CONCAT('-',#{thresholdUse})
+                </if>
+            </foreach>
+        </if>
+        <if test="model != -1">
+            limit #{pageStart},#{pageSize}
+        </if>
+
+    </select>
+
+    <select id="findSingleReportbx" parameterType="StationQueryInfo" resultMap="station">
+        select * from changedata ch, data d, data_original doc where ch.RecordTime between #{timeStart} and #{timeEnd}
+        and ch.RecordTime=d.timeperiod  and d.strBaseStationName=doc.`name` and ch.changedataid=d.dataid
+        and d.strBaseStationName=#{baseStationName} and d.strMonitorName=#{monitorStationName}
+    </select>
+
+</mapper>

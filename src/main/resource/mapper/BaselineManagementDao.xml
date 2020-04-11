@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pdsk.dao.BaselineManagementDao">
+    <select id="findBaselineRecordCount" resultType="Integer">
+        select count(*) from changedata
+    </select>
+    <select id="findBaselineManagement" resultMap="Station">
+        select * from changedata  limit #{start},#{size}
+    </select>
+
+    <select id="findSiteQuery" resultMap="Site">
+        select * from data_original where MID=1
+    </select>
+
+    <resultMap id="Station" type="StationTobrows">
+        <result column="PairName" property="name"/>
+    </resultMap>
+
+    <resultMap id="Site" type="SiteQuery">
+        <result property="id" column="nameID"/>
+        <result property="name" column="name"/>
+        <result property="originalsDh" column="Original_SDh_inicial"/>
+        <result property="originalsDx" column="Original_SDx_inicial"/>
+        <result property="originalsDy" column="Original_SDy_inicial"/>
+        <result property="originalsKx" column="Original_SKx_inicial"/>
+        <result property="originalsKy" column="Original_SKy_inicial"/>
+        <result property="mid" column="MID"/>
+    </resultMap>
+
+</mapper>

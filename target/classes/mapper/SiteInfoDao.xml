@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pdsk.dao.SiteInfoDao">
+    <select id="getSiteRecordTotalCount"  resultType="Integer">
+        select count(*) from data_original
+    </select>
+
+    <select id="findSiteNameList" resultType="SiteQuery">
+        select * from monitoringname
+    </select>
+
+    <select id="findSiteListByPage"  resultMap="Site">
+        select * from data_original limit #{start},#{size}
+    </select>
+
+    <select id="findAllBaseStation" resultType="BaseStation">
+        select * from basestationname
+    </select>
+
+    <resultMap id="Site" type="SiteQuery">
+        <result property="id" column="nameID"/>
+        <result property="name" column="name"/>
+        <result property="originalsDh" column="Original_SDh_inicial"/>
+        <result property="originalsDx" column="Original_SDx_inicial"/>
+        <result property="originalsDy" column="Original_SDy_inicial"/>
+        <result property="originalsKx" column="Original_SKx_inicial"/>
+        <result property="originalsKy" column="Original_SKy_inicial"/>
+        <result property="mid" column="MID"/>
+    </resultMap>
+
+    <delete id="deleteSiteById">
+        delete from data_original where nameID = #{id}
+    </delete>
+
+    <delete id="insertSite" parameterType="SiteQuery">
+        insert into data_original(name,Original_SDx_inicial,Original_SDy_inicial,Original_SKx_inicial,Original_SKy_inicial,Original_SDh_inicial,MID,WGS84X,WGS84Y,WGS84Z)
+        values(#{name},#{originalsDx},#{originalsDy},#{originalsKx},#{originalsKy},#{originalsDh},#{mid},0.0,0.0,0.0)
+    </delete>
+
+    <delete id="updateSite" parameterType="SiteQuery">
+        update data_original set name=#{name}, Original_SDx_inicial=#{originalsDx} , Original_SDy_inicial=#{originalsDy} , Original_SKx_inicial=#{originalsKx} ,
+         Original_SKy_inicial=#{originalsKy} ,Original_SDh_inicial=#{originalsDh}, MID=#{mid}where nameID=#{id}
+    </delete>
+</mapper>
